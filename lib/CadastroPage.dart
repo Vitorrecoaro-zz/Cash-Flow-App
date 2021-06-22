@@ -4,7 +4,7 @@ import "package:path_provider/path_provider.dart";
 import "package:flutter/material.dart";
 
 class Cadastro extends StatefulWidget {
-  const Cadastro({Key? key}) : super(key: key);
+  const Cadastro();
 
   @override
   _CadastroState createState() => _CadastroState();
@@ -36,6 +36,11 @@ class _CadastroState extends State<Cadastro> {
     }
   }
 
+  Future<Null> _deleteData() async {
+    final file = await _getFile();
+    file.delete();
+  }
+
   Future<File> _getFile() async {
     final file = await getApplicationDocumentsDirectory();
     print(file.path);
@@ -60,7 +65,6 @@ class _CadastroState extends State<Cadastro> {
       appBar: AppBar(
         backgroundColor: Colors.amber,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               Icons.attach_money,
@@ -81,16 +85,22 @@ class _CadastroState extends State<Cadastro> {
           children: [
             Image.network(
               "https://iconape.com/wp-content/files/mi/246600/png/246600.png",
-              width: 300,
+              width: 200,
             ),
             _createTextField("Profissão", job, TextInputType.text),
             _createTextField("Salário", salary, TextInputType.number),
             ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    if (job.text.isEmpty || salary.text.isEmpty) {
+                    if (job.text.isEmpty && salary.text.isEmpty) {
+                      job.text = "";
+                      salary.text = "";
                       anwser = "Digite seus dados.";
+                      _deleteData();
                     } else {
+                      // Delete the last data used
+                      _deleteData();
+                      // Save new data
                       _saveData();
                       _getData().then((data) {
                         anwser =
