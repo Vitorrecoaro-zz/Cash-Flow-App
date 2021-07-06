@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:cashflow/GamePage.dart';
 import "package:path_provider/path_provider.dart";
 import "package:flutter/material.dart";
 
@@ -83,8 +84,8 @@ class _CadastroState extends State<Cadastro> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.network(
-              "https://iconape.com/wp-content/files/mi/246600/png/246600.png",
+            Image.asset(
+              "images/CashFlow_logo.png",
               width: 200,
             ),
             _createTextField("Profissão", job, TextInputType.text),
@@ -106,6 +107,8 @@ class _CadastroState extends State<Cadastro> {
                         anwser =
                             "Profissão: ${json.decode(data!)["job"]}\nSalário:${json.decode(data)["salary"]}";
                       });
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => GamePage()));
                     }
                   });
                 },
