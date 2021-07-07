@@ -17,24 +17,16 @@ class _CadastroState extends State<Cadastro> {
   String anwser = "";
 
   Future<File> _saveData() async {
-    Map<String, String> cadastro = Map();
+    Map<String, dynamic> cadastro = Map();
     cadastro["job"] = job.text;
     cadastro["salary"] = salary.text;
+    cadastro["gaming"] = true;
     job.text = "";
     salary.text = "";
     String data = json.encode(cadastro);
     print(data);
     final file = await _getFile();
     return file.writeAsString(data);
-  }
-
-  Future<String?> _getData() async {
-    try {
-      final file = await _getFile();
-      return file.readAsString();
-    } catch (e) {
-      return null;
-    }
   }
 
   Future<Null> _deleteData() async {
@@ -97,16 +89,11 @@ class _CadastroState extends State<Cadastro> {
                       job.text = "";
                       salary.text = "";
                       anwser = "Digite seus dados.";
-                      _deleteData();
                     } else {
                       // Delete the last data used
                       _deleteData();
                       // Save new data
                       _saveData();
-                      _getData().then((data) {
-                        anwser =
-                            "Profissão: ${json.decode(data!)["job"]}\nSalário:${json.decode(data)["salary"]}";
-                      });
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => GamePage()));
                     }
