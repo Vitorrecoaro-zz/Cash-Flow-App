@@ -1,4 +1,4 @@
-import 'package:cashflow/CadastroPage.dart';
+import 'package:cashflow/Pages/CadastroPage.dart';
 import "package:flutter/material.dart";
 
 import 'GamePage.dart';
@@ -10,6 +10,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
+        height: MediaQuery.of(context).size.height,
         color: Colors.amber,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
